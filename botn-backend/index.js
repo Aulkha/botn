@@ -5,7 +5,7 @@ installGlobals();
 
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 // Import oak
