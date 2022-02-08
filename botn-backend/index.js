@@ -27,11 +27,11 @@ router.get("/", (ctx) => {
 })
 
 router.get("/territory", async (ctx) => {
-    console.log("Territory Accessed");    
     const querySnapshot = await getDocs(collection(db, "territory"));
-    console.log("This is the stuff:", querySnapshot);
-    ctx.response.body = querySnapshot.map((doc) => doc.data());
-    ctx.response.type = "json";
+    querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+    });
+    ctx.response = querySnapshot;
 })
 
 const app = new Application();
