@@ -31,7 +31,7 @@ router.get("/territory", async (ctx) => {
     querySnapshot.forEach((doc) => {
         console.log(`${doc.id} => ${doc.data()}`);
     });
-    ctx.response = querySnapshot;
+    ctx.response.body = querySnapshot;
 })
 
 const app = new Application();
