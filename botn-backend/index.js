@@ -4,9 +4,9 @@ import { installGlobals } from "https://deno.land/x/virtualstorage@0.1.0/mod.ts"
 installGlobals();
 
 // Import Firebase
-import firebase from "https://cdn.skypack.dev/firebase@8.7.0/app";
-import "https://cdn.skypack.dev/firebase@8.7.0/auth";
-import "https://cdn.skypack.dev/firebase@8.7.0/firestore";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 // Import oak
 import {
@@ -16,9 +16,9 @@ import { virtualStorage } from "https://deno.land/x/virtualstorage@0.1.0/middlew
 
 // Initialize Firebase
 const firebaseConfig = JSON.parse(Deno.env.get("FIREBASE_CONFIG"));
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const db = firebase.db(firebaseApp);
-const auth = firebase.auth(firebaseApp);
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
 
 const router = new Router()
 
