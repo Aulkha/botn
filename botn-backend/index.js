@@ -18,6 +18,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
+const users = new Map();
 const router = new Router()
 
 router.get("/", (ctx) => {
@@ -34,8 +35,6 @@ router.get("/territory", async (ctx) => {
 
 const app = new Application();
 app.use(virtualStorage());
-
-const users = new Map();
 
 app.use(async (ctx, next) => {
     console.log("App Started")
