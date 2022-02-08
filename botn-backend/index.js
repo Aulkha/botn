@@ -36,7 +36,8 @@ router.get("/territory", async (ctx) => {
 const app = new Application();
 app.use(virtualStorage());
 
-app.use(async (ctx, next) => {
+app.use((ctx, next) => {
+    /*
     console.log("App Started")
     const signedInUid = ctx.cookies.get("LOGGED_IN_UID");
     console.log(signedInUid)
@@ -53,6 +54,7 @@ app.use(async (ctx, next) => {
         await auth.updateCurrentUser(signedInUser);
       }
     }
+    */
     return next();
 });
 
