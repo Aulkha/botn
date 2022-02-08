@@ -35,9 +35,12 @@ router.get("/territory", async (ctx) => {
 const app = new Application();
 app.use(virtualStorage());
 
+const users = new Map();
+
 app.use(async (ctx, next) => {
     console.log("App Started")
     const signedInUid = ctx.cookies.get("LOGGED_IN_UID");
+    console.log(signedInUid)
     const signedInUser = signedInUid != null ? users.get(signedInUid) : undefined;
     if (!signedInUid || !signedInUser || !auth.currentUser) {
       const creds = await auth.signInWithEmailAndPassword("rakha.tblt@gmail.com", "jGWmpg82vjArtZ");
