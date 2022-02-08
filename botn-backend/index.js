@@ -5,7 +5,7 @@ installGlobals();
 
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
+import { getFirestore, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 // Import oak
@@ -29,9 +29,9 @@ router.get("/", (ctx) => {
 router.get("/territory", async (ctx) => {
     console.log("Territory Accessed");
     console.log(db);
-    const querySnapshot = await db.collection("territory").get();
+    const querySnapshot = await getDocs(collection(db, "territory"));
     console.log(querySnapshot);
-    ctx.response.body = querySnapshot.docs.map((doc) => doc.data());
+    ctx.response.body = querySnapshot.map((doc) => doc.data());
     ctx.response.type = "json";
 })
 
