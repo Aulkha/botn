@@ -15,8 +15,8 @@ import { virtualStorage } from "https://deno.land/x/virtualstorage@0.1.0/middlew
 // Initialize Firebase
 const firebaseConfig = JSON.parse(Deno.env.get("FIREBASE_CONFIG"));
 const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-const auth = getAuth(firebaseApp);
+const db = getFirestore();
+const auth = getAuth();
 
 const users = new Map();
 const router = new Router()
@@ -27,9 +27,7 @@ router.get("/", (ctx) => {
 })
 
 router.get("/territory", async (ctx) => {
-    console.log("Territory Accessed");
-    console.log(db);
-    const querySnapshot = await getDocs(collection(db, "territory"));
+    console.log("Territory Accessed");    const querySnapshot = await getDocs(collection(db, "territory"));
     console.log(querySnapshot);
     ctx.response.body = querySnapshot.map((doc) => doc.data());
     ctx.response.type = "json";
