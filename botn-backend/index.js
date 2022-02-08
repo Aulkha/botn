@@ -20,6 +20,11 @@ const auth = getAuth(firebaseApp);
 
 const router = new Router()
 
+router.get("/", (ctx) => {
+    ctx.response.body = "BotN REST API";
+    ctx.response.type = "string";
+})
+
 router.get("/territory", async (ctx) => {
     const querySnapshot = await db.collection("territory").get()
     console.log(querySnapshot)
@@ -36,9 +41,11 @@ app.use(async (ctx, next) => {
     if (!signedInUid || !signedInUser || !auth.currentUser) {
       const creds = await auth.signInWithEmailAndPassword("rakha.tblt@gmail.com", "jGWmpg82vjArtZ");
       const { user } = creds;
+      console.log("Signing In")
       if (user) {
         users.set(user.uid, user);
         ctx.cookies.set("LOGGED_IN_UID", user.uid);
+        console.log("User Signed In")
       } else if (signedInUser && signedInUid.uid !== auth.currentUser?.uid) {
         await auth.updateCurrentUser(signedInUser);
       }
