@@ -36,6 +36,7 @@ const app = new Application();
 app.use(virtualStorage());
 
 app.use(async (ctx, next) => {
+    console.log("App Started")
     const signedInUid = ctx.cookies.get("LOGGED_IN_UID");
     const signedInUser = signedInUid != null ? users.get(signedInUid) : undefined;
     if (!signedInUid || !signedInUser || !auth.currentUser) {
