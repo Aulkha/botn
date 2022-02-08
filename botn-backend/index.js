@@ -4,7 +4,9 @@ import { installGlobals } from "https://deno.land/x/virtualstorage@0.1.0/mod.ts"
 installGlobals();
 
 // Import Firebase
-import firebase from "https://cdn.skypack.dev/firebase";
+import firebase from "https://cdn.skypack.dev/firebase@8.7.0/app";
+import "https://cdn.skypack.dev/firebase@8.7.0/auth";
+import "https://cdn.skypack.dev/firebase@8.7.0/firestore";
 
 // Import oak
 import {
