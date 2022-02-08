@@ -9,9 +9,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 // Import oak
-import {
-    Application
-  } from "https://deno.land/x/oak@v7.7.0/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak@v7.7.0/mod.ts";
 import { virtualStorage } from "https://deno.land/x/virtualstorage@0.1.0/middleware.ts";
 
 // Initialize Firebase
