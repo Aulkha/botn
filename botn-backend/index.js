@@ -53,7 +53,7 @@ import territory from "./routes/territory.js";
 territory(territoryRouter, db);
 
 const appRouter = new Router();
-appRouter.use("/territory", territory.routes(), territory.allowedMethods());
+appRouter.use("/territory", territoryRouter.routes(), territoryRouter.allowedMethods());
 
 app.use(appRouter.routes());
 await app.listen({ port: 8000 });
