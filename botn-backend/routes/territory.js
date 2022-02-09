@@ -11,7 +11,7 @@ const territory = (router, db) => {
             const docObj = {
                 "id": doc.id
             };
-            Object.assign(docObj, doc.data);
+            Object.assign(docObj, doc.data());
             Object.assign(response, docObj)
         });
         ctx.response.body = response;
