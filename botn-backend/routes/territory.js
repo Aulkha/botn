@@ -19,4 +19,4 @@ const territory = (router, db) => {
 
 };
 
-export { territory };
+export default territory;
