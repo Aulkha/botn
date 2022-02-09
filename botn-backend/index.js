@@ -48,11 +48,12 @@ app.use((ctx, next) => {
 
 // Router Middlewares
 // Territory Route
-const territoryRouter = new Router().use("/territory");
+const territoryRouter = new Router();
 import territory from "./routes/territory.js";
 territory(territoryRouter, db);
 
-app.use(territoryRouter.routes());
-app.use(territoryRouter.allowedMethods());
+const appRouter = new Router();
+appRouter.use("/territory", territory.routes(), territory.allowedMethods());
 
+app.use(appRouter.routes());
 await app.listen({ port: 8000 });
