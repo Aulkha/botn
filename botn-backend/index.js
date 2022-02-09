@@ -5,35 +5,20 @@ installGlobals();
 
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-import { getFirestore, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 // Import oak
-import { Application, Router } from "https://deno.land/x/oak@v7.7.0/mod.ts";
+import { Application } from "https://deno.land/x/oak@v7.7.0/mod.ts";
 import { virtualStorage } from "https://deno.land/x/virtualstorage@0.1.0/middleware.ts";
 
 // Initialize Firebase
 const firebaseConfig = JSON.parse(Deno.env.get("FIREBASE_CONFIG"));
 const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore();
 const auth = getAuth();
 
 const users = new Map();
-const router = new Router()
 
-router.get("/", (ctx) => {
-    ctx.response.body = "BotN REST API";
-    ctx.response.type = "string";
-})
-
-router.get("/territory", async (ctx) => {
-    const querySnapshot = await getDocs(collection(db, "territory"));
-    querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-    });
-    ctx.response.body = querySnapshot;
-})
-
+// Authentication Middleware
 const app = new Application();
 app.use(virtualStorage());
 
@@ -59,8 +44,9 @@ app.use((ctx, next) => {
     return next();
 });
 
-// Routers
-app.use(router.routes());
-app.use(router.allowedMethods());
+// Router Middlewares
+import * as territory from './routes/territory.js'
+app.use(territory.routes());
+app.use(territory.allowedMethods());
 
 await app.listen({ port: 8000 });
