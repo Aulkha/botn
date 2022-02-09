@@ -46,7 +46,7 @@ app.use((ctx, next) => {
 
 // Router Middlewares
 import * as territory from './routes/territory.js'
-app.use(territory.routes());
+app.use(territory.routes);
 app.use(territory.allowedMethods());
 
 await app.listen({ port: 8000 });
