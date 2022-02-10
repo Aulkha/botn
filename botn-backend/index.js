@@ -32,8 +32,8 @@ app.use(async (ctx, next) => {
 app.use(async (ctx, next) => {
     await next();
     const user = auth.currentUser;
-    const loginURL = /auth\/login/;
-    if (user === null && !loginURL.test(ctx.request.url)) {
+    const signinURL = /auth\/signin/;
+    if (user === null && !signinURL.test(ctx.request.url)) {
         ctx.throw(401);
     }
 })
