@@ -24,7 +24,7 @@ const app = new Application();
 // Logger
 app.use(async (ctx, next) => {
     await next();
-    console.log(`${ctx.request.method} ${ctx.request.url} ${rt}`);
+    console.log(`${ctx.request.method} ${ctx.request.url}`);
 });
 
 // Auth
