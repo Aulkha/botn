@@ -13,22 +13,11 @@ const authRoute = (router, auth) => {
         console.log("2");
         console.log(req.email, req.password);
 
-        signInWithEmailAndPassword(auth, req.email, req.password)
-            .then((creds) => {
-                console.log("User Signed In");
-                ctx.status = 200;
-                return new Promise(resolve => {
-                    ctx.response.body = {
-                        "success": true,
-                        "creds": creds
-                    };
-                    resolve();
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-                ctx.status = 401;
-            })
+        await signInWithEmailAndPassword(auth, req.email, req.password).catch((error) => console.log(error));
+        ctx.response.body = {
+            "success": true,
+            "creds": creds
+        };
     })
 
 }
