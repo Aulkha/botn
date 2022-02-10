@@ -5,13 +5,13 @@ const territory = (router, db) => {
 
     router.get("/map", async (ctx) => {
         const querySnapshot = await getDocs(collection(db, "territory"));
-        const response = new Map();
+        const response = {};
         querySnapshot.forEach((doc) => {
             const docData = doc.data();
-            response.set(doc.id, {
+            response[doc.id] = {
                 "name": docData.name,
                 "occupant": docData.occupant
-            });
+            };
         });
         console.log(response);
         ctx.response.body = response;
