@@ -48,7 +48,7 @@ const territory = (router, db) => {
         const res = document;
 
         if (document.currentBattle !== null) {
-            const currentBattleDoc = await getDoc(document.currentBattle)
+            const currentBattleDoc = await getDoc(document.currentBattle);
             res.currentBattle = currentBattleDoc.data();
         }
 
