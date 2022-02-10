@@ -5,7 +5,7 @@ const authRoute = (router, auth) => {
     
     router.post("/signin", (ctx) => {
         console.log("User Signing In");
-        const req = new Map(ctx.request.body);
+        const req = ctx.request.body;
         console.log("1");
         ctx.assert(req || req.email || req.password, 400);
         console.log("2");
