@@ -33,7 +33,7 @@ app.use(async (ctx, next) => {
     const user = auth.currentUser;
     const signinURL = /auth\/signin/;
     if (user === null && !signinURL.test(ctx.request.url)) {
-        ctx.throw(403);
+        ctx.throw(401);
     }
 })
 

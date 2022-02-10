@@ -9,7 +9,7 @@ const authRoute = (router, auth) => {
         const req = await reqBody.value;
         const type = await reqBody.type;
         console.log("1");
-        ctx.assert(type === "json" && req.email && req.password, 403);
+        ctx.assert(type === "json" && req.email && req.password, 401);
         console.log("2");
         console.log(req.email, req.password);
 
