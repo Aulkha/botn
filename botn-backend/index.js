@@ -33,7 +33,7 @@ app.use(async (ctx, next) => {
     await next();
     const user = auth.currentUser;
     const loginURL = /auth\/login/;
-    if (user != null && !loginURL.test(ctx.request.url)) {
+    if (user == null && !loginURL.test(ctx.request.url)) {
         ctx.status = 401;
         ctx.response.body = "Unauthorized";
     }
