@@ -43,6 +43,7 @@ const territory = (router, db) => {
     })
 
     router.get("/:id", async (ctx) => {
+        console.log(ctx?.params?.id);
         const querySnapshot = await getDoc(await doc(db, "territory", ctx?.params?.id));
         const document = querySnapshot.data();
         const res = document;
