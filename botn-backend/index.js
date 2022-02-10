@@ -5,7 +5,7 @@ installGlobals();
 
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-import { getAuth, setPersistence } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 
 // Import oak
@@ -16,7 +16,6 @@ import { virtualStorage } from "https://deno.land/x/virtualstorage@0.1.0/middlew
 const firebaseConfig = JSON.parse(Deno.env.get("FIREBASE_CONFIG"));
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth();
-setPersistence(auth, 'none');
 const db = getFirestore();
 
 // Middlewares
