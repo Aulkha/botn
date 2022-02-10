@@ -3,16 +3,15 @@ import { getDocs, collection } from "https://www.gstatic.com/firebasejs/9.6.6/fi
 
 const territory = (router, db) => {
 
-    router.get("/", async (ctx) => {
+    router.get("/map", async (ctx) => {
         const querySnapshot = await getDocs(collection(db, "territory"));
-        const response = {};
+        const response = new Map();
         querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data()}`);
-            const docObj = {
-                "id": doc.id
-            };
-            Object.assign(docObj, doc.data());
-            Object.assign(response, docObj)
+            const docData = doc.data();
+            response.set(doc.id, {
+                name: docData.name,
+                occupant: doc.occupant
+            });
         });
         console.log(response);
         ctx.response.body = response;
