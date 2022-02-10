@@ -22,7 +22,7 @@ const territory = (router, db) => {
                 currentBattle: null
             })
 
-            ctx.response.body = { addedDoc };
+            ctx.response.body = { "message": "success", "doc": addedDoc };
         } catch (err){
             error(err, ctx);
         }
@@ -60,8 +60,8 @@ const territory = (router, db) => {
         ctx.assert(reqBody.type === "json", 400);
 
         try {
-            const updatedDoc = await updateDoc(await doc(db, "territory", ctx?.params?.id), req)
-            ctx.response.body = { updatedDoc };
+            const updatedDoc = await updateDoc(await doc(db, "territory", ctx?.params?.id), req);
+            ctx.response.body = { "message": "success", "doc": updatedDoc };
         } catch (err){
             error(err, ctx);
         }
