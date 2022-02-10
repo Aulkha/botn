@@ -3,11 +3,11 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9
 
 const authRoute = (router, auth) => {
     
-    router.post("/signin", (ctx) => {
+    router.post("/signin", async (ctx) => {
         console.log("User Signing In");
-        console.log(ctx.request.body().value);
+        console.log(await ctx.request.body().value);
         ctx.status = 200;
-        ctx.response.body = ctx.request.body().value;
+        ctx.response.body = await ctx.request.body().value;
         /*
         const req = ctx.request.body().value;
         const type = ctx.request.body().type;
