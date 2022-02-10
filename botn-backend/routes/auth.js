@@ -8,7 +8,7 @@ const authRoute = (router, auth) => {
         const req = ctx.request.body;
         console.log("1");
         ctx.assert(req || req.email || req.password, 400);
-        console.log("2");
+        console.log(req.email, req.password));
 
         signInWithEmailAndPassword(auth, req.email, req.password)
             .then((creds) => {
@@ -22,10 +22,6 @@ const authRoute = (router, auth) => {
             .catch((error) => {
                 console.log(error);
                 ctx.status = 401;
-                ctx.response.body = {
-                    success: false,
-                    error: error
-                };
             })
     })
 
