@@ -1,5 +1,5 @@
 // Import Firebase
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
+import { signInWithEmailAndPassword, setPersistence, inMemoryPersistence } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 const authRoute = (router, auth) => {
     
@@ -13,9 +13,11 @@ const authRoute = (router, auth) => {
         console.log("2");
         console.log(req.email, req.password);
 
-        await signInWithEmailAndPassword(auth, req.email, req.password).catch((error) => console.log(error));
+        await setPersistence(auth, inMemoryPersistence)
+        const certs = await signInWithEmailAndPassword(auth, req.email, req.password).catch((error) => console.log(error));
         ctx.response.body = {
-            "success": true
+            "success": true,
+            "certs": certs
         };
     })
 
