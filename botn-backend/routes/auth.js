@@ -5,9 +5,10 @@ const authRoute = (router, auth) => {
     
     router.post("/signin", (ctx) => {
         console.log("User Signing In");
-        const req = ctx.request.body();
+        const req = ctx.request.body().value;
+        const type = ctx.request.body().type;
         console.log("1");
-        ctx.assert(req.type === "json" && req.email && req.password, 400);
+        ctx.assert(type === "json" && req.email && req.password, 400);
         console.log("2");
         console.log(req.email, req.password);
 
