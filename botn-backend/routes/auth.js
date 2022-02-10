@@ -5,7 +5,9 @@ const authRoute = (router, auth) => {
     
     router.post("/signin", (ctx) => {
         console.log("User Signing In");
-        console.log(ctx.request);
+        console.log(ctx.request.body());
+        ctx.status = 200;
+        ctx.response.body = ctx.request.body();
         /*
         const req = ctx.request.body().value;
         const type = ctx.request.body().type;
