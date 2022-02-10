@@ -50,8 +50,8 @@ const territory = (router, db) => {
         console.log(querySnapshot);
         console.log(document);
         if (document.currentBattle && document.currentBattle !== null) {
-            console.log(res.currentBattle);
-            console.log(document.currentBattle.data());
+            console.log(`Current Battle Data: ${res.currentBattle}`);
+            console.log(`Current Battle Data: ${document.currentBattle.data}()`);
             res.currentBattle = document.currentBattle.data();
         }
 
