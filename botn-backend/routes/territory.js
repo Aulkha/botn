@@ -30,26 +30,29 @@ const territory = (router, db) => {
 
     router.get("/map", async (ctx) => {
         const querySnapshot = await getDocs(await collection(db, "territory"));
-        const response = {};
+        const res = {};
         querySnapshot.forEach((document) => {
             const docData = document.data();
-            response[document.id] = {
+            res[document.id] = {
                 "name": docData.name,
                 "occupant": docData.occupant
             };
         });
-        console.log(response);
-        ctx.response.body = response;
+        console.log(res);
+        ctx.response.body = res;
     })
 
     router.get("/:id", async (ctx) => {
         const querySnapshot = await getDoc(await doc(db, "territory", ctx?.params?.id));
         const document = querySnapshot.data();
+        const res = document;
         if (document.currentBattle !== null) {
-            document.currentBattle = document.currentBattle.data();
+            console.log(res.currentBattle);
+            console.log(document.currentBattle.data());
+            res.currentBattle = document.currentBattle.data();
         }
 
-        ctx.response.body = document;
+        ctx.response.body = res;
     })
     router.patch("/:id", async (ctx) => {
         const reqBody = await ctx.body();
