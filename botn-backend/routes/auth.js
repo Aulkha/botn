@@ -15,8 +15,7 @@ const authRoute = (router, auth) => {
 
         await signInWithEmailAndPassword(auth, req.email, req.password).catch((error) => console.log(error));
         ctx.response.body = {
-            "success": true,
-            "creds": creds
+            "success": true
         };
     })
 
