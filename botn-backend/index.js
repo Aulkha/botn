@@ -18,32 +18,13 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
-const users = new Map();
-
-// Authentication Middleware
+// Middlewares
 const app = new Application();
-app.use(virtualStorage());
 
+// Logger
 app.use((ctx, next) => {
-    /*
-    console.log("App Started")
-    const signedInUid = ctx.cookies.get("LOGGED_IN_UID");
-    console.log(signedInUid)
-    const signedInUser = signedInUid != null ? users.get(signedInUid) : undefined;
-    if (!signedInUid || !signedInUser || !auth.currentUser) {
-      const creds = await auth.signInWithEmailAndPassword("rakha.tblt@gmail.com", "jGWmpg82vjArtZ");
-      const { user } = creds;
-      console.log("Signing In")
-      if (user) {
-        users.set(user.uid, user);
-        ctx.cookies.set("LOGGED_IN_UID", user.uid);
-        console.log("User Signed In")
-      } else if (signedInUser && signedInUid.uid !== auth.currentUser?.uid) {
-        await auth.updateCurrentUser(signedInUser);
-      }
-    }
-    */
-    return next();
+    await next();
+    console.log(`${ctx.request.method} ${ctx.request.url}`);
 });
 
 // Router Middlewares
@@ -52,8 +33,14 @@ const territoryRouter = new Router();
 import territory from "./routes/territory.js";
 territory(territoryRouter, db);
 
+// Auth Route
+const authRouter = new Router();
+import authRoute from "./routes/auth.js";
+authRoute(authRouter, auth);
+
 const appRouter = new Router();
 appRouter.use("/territory", territoryRouter.routes(), territoryRouter.allowedMethods());
+appRouter.use("/auth", authRouter.routes(), authRouter.allowedMethods());
 
 app.use(appRouter.routes());
 await app.listen({ port: 8000 });
