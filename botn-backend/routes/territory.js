@@ -46,7 +46,8 @@ const territory = (router, db) => {
         const querySnapshot = await getDoc(await doc(db, "territory", ctx?.params?.id));
         const document = querySnapshot.data();
         const res = document;
-        if (document.currentBattle !== null) {
+        console.log(document);
+        if (document.currentBattle && document.currentBattle !== null) {
             console.log(res.currentBattle);
             console.log(document.currentBattle.data());
             res.currentBattle = document.currentBattle.data();
