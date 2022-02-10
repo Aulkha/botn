@@ -22,7 +22,7 @@ const db = getFirestore();
 const app = new Application();
 
 // Logger
-app.use((ctx, next) => {
+app.use(async (ctx, next) => {
     await next();
     console.log(`${ctx.request.method} ${ctx.request.url}`);
 });
