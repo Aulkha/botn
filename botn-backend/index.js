@@ -34,9 +34,7 @@ app.use(async (ctx, next) => {
     const user = auth.currentUser;
     const loginURL = /auth\/login/;
     if (user == null && !loginURL.test(ctx.request.url)) {
-        ctx.status = 401;
-        ctx.response.body = "Unauthorized";
-        ctx.respond = true;
+        ctx.throw(401);
     }
 })
 
