@@ -9,8 +9,8 @@ const territory = (router, db) => {
         querySnapshot.forEach((doc) => {
             const docData = doc.data();
             response.set(doc.id, {
-                name: docData.name,
-                occupant: doc.occupant
+                "name": docData.name,
+                "occupant": docData.occupant
             });
         });
         console.log(response);
