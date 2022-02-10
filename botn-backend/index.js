@@ -36,6 +36,7 @@ app.use(async (ctx, next) => {
     if (user == null && !loginURL.test(ctx.request.url)) {
         ctx.status = 401;
         ctx.response.body = "Unauthorized";
+        ctx.respond = true;
     }
 })
 
