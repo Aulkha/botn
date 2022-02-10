@@ -18,8 +18,8 @@ const authRoute = (router, auth) => {
                 console.log("User Signed In");
                 ctx.status = 200;
                 ctx.response.body = {
-                    success: true,
-                    creds: creds
+                    "success": true,
+                    "creds": creds
                 };
             })
             .catch((error) => {
