@@ -32,9 +32,11 @@ app.use(async (ctx, next) => {
 app.use(async (ctx, next) => {
     await next();
     const user = auth.currentUser;
-    console.log(user);
     const loginURL = /auth\/login/;
-    console.log(loginURL.test(ctx.request.url));
+    if (user != null && !loginURL.test(ctx.request.url)) {
+        ctx.status = 401;
+        ctx.response.body = "Unauthorized";
+    }
 })
 
 // Router Middlewares
