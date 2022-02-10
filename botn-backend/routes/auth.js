@@ -17,10 +17,13 @@ const authRoute = (router, auth) => {
             .then((creds) => {
                 console.log("User Signed In");
                 ctx.status = 200;
-                ctx.response.body = {
-                    "success": true,
-                    "creds": creds
-                };
+                return new Promise(resolve => {
+                    ctx.response.body = {
+                        "success": true,
+                        "creds": creds
+                    };
+                    resolve();
+                })
             })
             .catch((error) => {
                 console.log(error);
