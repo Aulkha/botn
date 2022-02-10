@@ -24,8 +24,18 @@ const app = new Application();
 // Logger
 app.use(async (ctx, next) => {
     await next();
-    console.log(`${ctx.request.method} ${ctx.request.url}`);
+    const rt = ctx.response.headers.get("X-Response-Time");
+    console.log(`${ctx.request.method} ${ctx.request.url} ${rt}`);
 });
+
+// Auth
+app.use(async (ctx, next) => {
+    await next();
+    const user = auth.currentUser;
+    console.log(user);
+    const loginURL = /auth\/login/;
+    console.log(loginURL.test(ctx.request.url));
+})
 
 // Router Middlewares
 // Territory Route
