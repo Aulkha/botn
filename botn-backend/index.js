@@ -28,7 +28,6 @@ app.use(async (ctx, next) => {
 });
 
 // Auth
-/*
 app.use(async (ctx, next) => {
     await next();
     const user = auth.currentUser;
@@ -36,7 +35,7 @@ app.use(async (ctx, next) => {
     if (user === null && !signinURL.test(ctx.request.url)) {
         ctx.throw(401);
     }
-}) */
+})
 
 // Router Middlewares
 // Territory Route

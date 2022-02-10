@@ -5,12 +5,9 @@ const authRoute = (router, auth) => {
     
     router.post("/signin", async (ctx) => {
         console.log("User Signing In");
-        console.log(await ctx.request.body().value);
-        ctx.status = 200;
-        ctx.response.body = await ctx.request.body().value;
-        /*
-        const req = ctx.request.body().value;
-        const type = ctx.request.body().type;
+        const reqBody = await ctx.request.body();
+        const req = reqBody.value;
+        const type = reqBody.type;
         console.log("1");
         ctx.assert(type === "json" && req.email && req.password, 400);
         console.log("2");
@@ -29,7 +26,6 @@ const authRoute = (router, auth) => {
                 console.log(error);
                 ctx.status = 401;
             })
-        */
     })
 
 }
