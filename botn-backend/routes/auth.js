@@ -5,7 +5,8 @@ const authRoute = (router, auth) => {
     
     router.post("/signin", (ctx) => {
         console.log("User Signing In");
-        console.log(ctx.request.body());
+        console.log(ctx.request);
+        /*
         const req = ctx.request.body().value;
         const type = ctx.request.body().type;
         console.log("1");
@@ -26,6 +27,7 @@ const authRoute = (router, auth) => {
                 console.log(error);
                 ctx.status = 401;
             })
+        */
     })
 
 }
