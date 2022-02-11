@@ -10,7 +10,7 @@ const error = (err, ctx) => {
 const territory = (router, db) => {
 
     router.post("/", async (ctx) => {
-        const reqBody = await ctx.body();
+        const reqBody = await ctx.request.body();
         const req = await reqBody.value;
         ctx.assert(reqBody.type === "json", 400);
 
@@ -55,7 +55,7 @@ const territory = (router, db) => {
         ctx.response.body = res;
     })
     router.patch("/:id", async (ctx) => {
-        const reqBody = await ctx.body();
+        const reqBody = await ctx.request.body();
         const req = await reqBody.value;
         ctx.assert(reqBody.type === "json", 400);
 
