@@ -1,27 +1,24 @@
 // Import Firebase
 import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence, signOut } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
+// Import Modules
+import { error, getReq } from "../modules/server-module.js";
+
 const authRoute = (router, auth) => {
     
     router.post("/signin", async (ctx) => {
-        console.log("User Signing In");
-        const reqBody = await ctx.request.body();
-        const req = await reqBody.value;
-        const type = await reqBody.type;
-        console.log("1");
-        ctx.assert(type === "json" && req.email && req.password, 401);
-        console.log("2");
-        console.log(req.email, req.password);
+        const req = getReq(ctx);
 
         await setPersistence(auth, browserSessionPersistence)
-        const certs = await signInWithEmailAndPassword(auth, req.email, req.password).catch((error) => {
-            console.error(error);
-            ctx.throw(400);
-        });
-        ctx.response.body = {
-            "success": true,
-            "certs": certs
-        };
+        try {
+            const certs = await signInWithEmailAndPassword(auth, req.email, req.password)
+            ctx.response.body = {
+                "success": true,
+                "certs": certs
+            };
+        } catch (err) {
+            error(ctx, err);
+        }
     })
     router.post("/signout", async (ctx) => {
         await signOut(auth).catch((error) => {
