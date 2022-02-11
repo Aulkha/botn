@@ -4,7 +4,7 @@ export const error = (ctx, err) => {
     ctx.response.body = { "message": err };
 }
 
-export const getReq = (ctx, type) => {
+export const getReq = async (ctx, type) => {
     ctx.assert(ctx.request.headers.get("Content-Type"), 400);
     const reqBody = await ctx.request.body();
     const req = await reqBody.value;
