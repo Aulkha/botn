@@ -1,18 +1,13 @@
 // Import Firebase
 import { getDocs, collection, doc, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 
-const error = (err, ctx) => {
-    console.error(err);
-    ctx.response.status = 400;
-    ctx.response.body = { "message": err };
-}
+// Import Modules
+import { error, getReq } from "../modules/serverModule.js";
 
 const territory = (router, db) => {
 
     router.post("/", async (ctx) => {
-        const reqBody = await ctx.request.body();
-        const req = await reqBody.value;
-        ctx.assert(reqBody.type === "json", 400);
+        const req = getReq(ctx);
 
         try {
             const addedDoc = await addDoc(await collection(db, "territory"), {
@@ -24,7 +19,7 @@ const territory = (router, db) => {
 
             ctx.response.body = { "message": "success", "doc": addedDoc };
         } catch (err){
-            error(err, ctx);
+            error(ctx, err);
         }
     })
 
@@ -55,15 +50,13 @@ const territory = (router, db) => {
         ctx.response.body = res;
     })
     router.patch("/:id", async (ctx) => {
-        const reqBody = await ctx.request.body();
-        const req = await reqBody.value;
-        ctx.assert(reqBody.type === "json", 400);
+        const req = getReq(ctx);
 
         try {
             const updatedDoc = await updateDoc(await doc(db, "territory", ctx?.params?.id), req);
             ctx.response.body = { "message": "success", "doc": updatedDoc };
         } catch (err){
-            error(err, ctx);
+            error(ctx, err);
         }
     })
 
