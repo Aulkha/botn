@@ -2,7 +2,7 @@
 import { getDocs, collection, doc, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 
 // Import Modules
-import { error, getReq } from "../modules/serverModule.js";
+import { error, getReq } from "../modules/server-module.js";
 
 const territory = (router, db) => {
 
