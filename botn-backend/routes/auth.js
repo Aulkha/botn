@@ -7,8 +7,7 @@ import { error, getReq } from "../modules/server-module.js";
 const authRoute = (router, auth) => {
     
     router.post("/signin", async (ctx) => {
-        const req = getReq(ctx);
-        console.log(req);
+        const req = await getReq(ctx);
 
         await setPersistence(auth, browserSessionPersistence)
         try {

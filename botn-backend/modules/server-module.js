@@ -13,6 +13,5 @@ export const getReq = async (ctx, type) => {
     if (type) { reqType = type }
     ctx.assert(reqBody.type === reqType, 400);
 
-    console.log(req);
     return req;
 }

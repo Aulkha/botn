@@ -7,7 +7,7 @@ import { error, getReq } from "../modules/server-module.js";
 const territory = (router, db) => {
 
     router.post("/", async (ctx) => {
-        const req = getReq(ctx);
+        const req = await getReq(ctx);
 
         try {
             const addedDoc = await addDoc(await collection(db, "territory"), {
@@ -50,7 +50,7 @@ const territory = (router, db) => {
         ctx.response.body = res;
     })
     router.patch("/:id", async (ctx) => {
-        const req = getReq(ctx);
+        const req = await getReq(ctx);
 
         try {
             const updatedDoc = await updateDoc(await doc(db, "territory", ctx?.params?.id), req);
