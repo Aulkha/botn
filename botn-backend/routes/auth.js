@@ -8,6 +8,7 @@ const authRoute = (router, auth) => {
     
     router.post("/signin", async (ctx) => {
         const req = getReq(ctx);
+        console.log(req);
 
         await setPersistence(auth, browserSessionPersistence)
         try {
