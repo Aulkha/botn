@@ -10,21 +10,21 @@ const territory = (router, db) => {
         const req = await getReq(ctx);
 
         try {
-            const addedDoc = await addDoc(await collection(db, "territory"), {
+            const addedDoc = await addDoc(collection(db, "territory"), {
                 name: req.name,
                 occupant: req.occupant,
                 gameLink: req.gameLink,
                 currentBattle: null
             })
 
-            ctx.response.body = { "message": "success", "doc": addedDoc };
+            ctx.response.body = { "success": true, "doc": addedDoc };
         } catch (err){
             error(ctx, err);
         }
     })
 
     router.get("/map", async (ctx) => {
-        const querySnapshot = await getDocs(await collection(db, "territory"));
+        const querySnapshot = await getDocs(collection(db, "territory"));
         const res = {};
         querySnapshot.forEach((document) => {
             const docData = document.data();
@@ -38,7 +38,7 @@ const territory = (router, db) => {
     })
 
     router.get("/:id", async (ctx) => {
-        const querySnapshot = await getDoc(await doc(db, "territory", ctx?.params?.id));
+        const querySnapshot = await getDoc(doc(db, "territory", ctx?.params?.id));
         const document = querySnapshot.data();
         const res = document;
 
@@ -54,7 +54,7 @@ const territory = (router, db) => {
 
         try {
             const updatedDoc = await updateDoc(await doc(db, "territory", ctx?.params?.id), req);
-            ctx.response.body = { "message": "success", "doc": updatedDoc };
+            ctx.response.body = { "success": true, "doc": updatedDoc };
         } catch (err){
             error(ctx, err);
         }

@@ -1,3 +1,8 @@
+// CONSTANTS
+import { config } from "https://deno.land/x/dotenv/mod.ts";
+const FIREBASE_CONFIG = JSON.parse(Deno.env.get("FIREBASE_CONFIG")); // JSON.parse(config().FIREBASE_CONFIG);
+console.log(FIREBASE_CONFIG);
+
 // Import Virtual Storage
 import "https://deno.land/x/xhr@0.1.1/mod.ts";
 import { installGlobals } from "https://deno.land/x/virtualstorage@0.1.0/mod.ts";
@@ -13,8 +18,7 @@ import { Application, Router } from "https://deno.land/x/oak@v10.2.0/mod.ts";
 import { virtualStorage } from "https://deno.land/x/virtualstorage@0.1.0/middleware.ts";
 
 // Initialize Firebase
-const firebaseConfig = JSON.parse(Deno.env.get("FIREBASE_CONFIG"));
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth();
 const db = getFirestore();
 
@@ -43,6 +47,11 @@ const territoryRouter = new Router();
 import territory from "./routes/territory.js";
 territory(territoryRouter, db);
 
+// War Route
+const warRouter = new Router();
+import router from "./routes/war.js";
+router(warRouter, db);
+
 // Auth Route
 const authRouter = new Router();
 import authRoute from "./routes/auth.js";
@@ -50,6 +59,7 @@ authRoute(authRouter, auth);
 
 const appRouter = new Router();
 appRouter.use("/territory", territoryRouter.routes(), territoryRouter.allowedMethods());
+appRouter.use("/war", warRouter.routes(), warRouter.allowedMethods());
 appRouter.use("/auth", authRouter.routes(), authRouter.allowedMethods());
 
 app.use(appRouter.routes());
