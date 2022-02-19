@@ -26,6 +26,7 @@ const territory = (router, db) => {
     router.get("/map", async (ctx) => {
         const querySnapshot = await getDocs(collection(db, "territory"));
         const res = {};
+
         querySnapshot.forEach((document) => {
             const docData = document.data();
             res[document.id] = {
@@ -33,28 +34,32 @@ const territory = (router, db) => {
                 "occupant": docData.occupant
             };
         });
-        console.log(res);
+
         ctx.response.body = res;
     })
 
     router.get("/:id", async (ctx) => {
-        const querySnapshot = await getDoc(doc(db, "territory", ctx?.params?.id));
-        const document = querySnapshot.data();
-        const res = document;
+        try {
+            const querySnapshot = await getDoc(doc(db, "territory", ctx?.params?.id));
+            const document = querySnapshot.data();
+            const res = document;
 
-        if (document.currentBattle !== null) {
-            const currentBattleDoc = await getDoc(document.currentBattle);
-            res.currentBattle = currentBattleDoc.data();
+            if (document.currentBattle) {
+                const currentBattleDoc = await getDoc(document.currentBattle);
+                res.currentBattle = currentBattleDoc.data();
+            }
+
+            ctx.response.body = { res };
+        } catch (err){
+            error(ctx, err)
         }
-
-        ctx.response.body = res;
     })
     router.patch("/:id", async (ctx) => {
         const req = await getReq(ctx);
 
         try {
-            const updatedDoc = await updateDoc(await doc(db, "territory", ctx?.params?.id), req);
-            ctx.response.body = { "success": true, "doc": updatedDoc };
+            await updateDoc(doc(db, "territory", ctx?.params?.id), req);
+            ctx.response.body = { "success": true };
         } catch (err){
             error(ctx, err);
         }
