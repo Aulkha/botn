@@ -21,9 +21,49 @@ const getNationTerritories = async (id) => {
     return doc.territories;
 };
 
-const newNation = async (body) => {
-    const doc = new Nation(body);
-    const savedDoc = doc.save();
+const getNationWars = async (id, alignment) => {
+    let doc;
+    let nationDoc;
+    switch (alignment) {
+        case 'all':
+            nationDoc = await Nation.findById(id).
+                populate('aggressiveWars').
+                populate('defensiveWars').
+                exec();
+            
+            doc = nationDoc.aggressiveWars.concat(nationDoc.defensiveWars);
+            break;
+        
+        case 'aggressor':
+            nationDoc = await Nation.findById(id).
+                populate('aggressiveWars').
+                exec();
+
+            doc = nationDoc.aggressiveWars;
+            break;
+
+        case 'defender':
+            nationDoc = await Nation.findById(id).
+                populate('defensiveWars').
+                exec();
+
+            doc = nationDoc.defensiveWars;
+            break;
+        
+        default:
+            return new Error('Invalid Alignment');
+    }
+
+    return doc;
+};
+
+const newNation = async ({ name, code}) => {
+    const doc = new Nation({
+        name,
+        code,
+        score: 0
+    });
+    const savedDoc = await doc.save();
 
     return savedDoc;
 };
@@ -67,4 +107,4 @@ const updateNation = async (id, field, body) => {
     return doc;
 };
 
-export default { getNation, newNation, getNations, updateNation, getNationTerritories };
+export default { getNation, newNation, getNations, updateNation, getNationTerritories, getNationWars };

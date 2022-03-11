@@ -10,6 +10,10 @@ const schema = new Schema({
     occupant: {
         type: Schema.Types.ObjectId,
         ref: 'Nation'
+    },
+    currentBattle: {
+        type: Schema.Types.ObjectId,
+        ref: 'Battle'
     }
 }, { timestamps: true });
 

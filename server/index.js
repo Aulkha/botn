@@ -18,10 +18,12 @@ app.use((req, res, next) => {
 // Import Routes
 import territory from './routes/territory.js';
 import nation from './routes/nation.js';
+import war from './routes/war.js';
 
 // Use Routes
 app.use('/api/territory', territory);
 app.use('/api/nation', nation);
+app.use('/api/war', war);
 
 // Start Server
 app.listen(process.env.PORT || 8000, () => console.log(`Listening on ${process.env.PORT || 8000}`));

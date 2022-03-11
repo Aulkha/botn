@@ -1,8 +1,7 @@
 import service from '../services/territory.js';
 
 const error = (res, err, status) => {
-    res.status(status || 400);
-    res.send(err);
+    res.status(status || 400).send(`Error: ${err.message}`);
     console.error(err);
 };
 /*

@@ -29,4 +29,18 @@ schema.virtual('territories', {
     foreignField: 'occupant'
 });
 
+schema.virtual('aggressiveWars', {
+    ref: 'War',
+    localField: '_id',
+    foreignField: 'belligerents.aggressors',
+    match: { ongoing: true }
+});
+
+schema.virtual('defensiveWars', {
+    ref: 'War',
+    localField: '_id',
+    foreignField: 'belligerents.defenders',
+    match: { ongoing: true }
+});
+
 export default mongoose.model('Nation', schema);

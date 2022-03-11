@@ -7,7 +7,10 @@ router.get('/', controller.getNations);
 router.post('/', controller.postNation);
 
 router.get('/:id', controller.getOneNation);
-router.get('/:id/territories', controller.getNationTerritories);
 router.patch('/:id.:field', controller.patchNation);
+
+router.get('/:id/territories', controller.getNationTerritories);
+
+router.get('/:id/wars', controller.getNationWars);
 
 export default router;

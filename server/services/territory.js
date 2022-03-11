@@ -11,7 +11,9 @@ const findTerritory = async (name, useRegex) => {
 };
 
 const getTerritoryById = async (id) => {
-    return await Territory.findById(id).exec();
+    return await Territory.findById(id).
+        populate('currentBattle').
+        exec();
 };
 
 const newTerritory = async (body) => {

@@ -1,8 +1,7 @@
 import service from "../services/nation.js";
 
 const error = (res, err, status) => {
-    res.status(status || 400);
-    res.send(err);
+    res.status(status || 400).send(`Error: ${err.message}`);
     console.error(err);
 };
 
@@ -21,7 +20,12 @@ controller.getOneNation = async (req, res) => {
 controller.getNationTerritories = async (req, res) => {
     const doc = await service.getNationTerritories(req.params.id);
     res.send({ doc });
-}
+};
+
+controller.getNationWars = async (req, res) => {
+    const doc = await service.getNationWars(req.params.id, req.query.alignment);
+    res.send({ doc });
+};
 
 controller.postNation = async (req, res) => {
     const body = req.body;
