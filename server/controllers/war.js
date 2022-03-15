@@ -54,6 +54,17 @@ controller.getBattles = async (req, res) => {
     }
 }
 
+controller.getBattle = async (req, res) => {
+    const id = req.params.id;
+    const index = req.params.index;
+    try {
+        const doc = await service.getBattle(id, index);
+        res.send({ doc });
+    } catch (e) {
+        error(res, e);
+    }
+}
+
 controller.postBattle = async (req, res) => {
     const body = req.body;
     const warId = req.params.id;
@@ -72,6 +83,19 @@ controller.patchBattle = async (req, res) => {
     const field = params.field;
     try {
         const doc = await service.updateBattle(id, index, field, req.body.value);
+        res.send({ doc });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
+controller.declareBattleVictor = async (req, res) => {
+    const params = req.params;
+    const id = params.id;
+    const index = params.index;
+    try {
+        await service.updateBattle(id, index, 'ongoing', false);
+        const doc = await service.updateBattle(id, index, 'victory', req.body.value);
         res.send({ doc });
     } catch (e) {
         error(res, e);

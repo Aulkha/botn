@@ -13,6 +13,9 @@ router.patch('/:id.:field', controller.patchWar);
 
 router.get('/:id/battles', controller.getBattles);
 router.post('/:id/battles', controller.postBattle);
+
+router.get('/:id/battles/:index', controller.getBattle);
+router.post('/:id/battles/:index/victory', controller.declareBattleVictor);
 router.patch('/:id/battles/:index.:field', controller.patchBattle);
 
 export default router;

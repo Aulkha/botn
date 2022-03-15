@@ -7,6 +7,11 @@ const battleSchema = new Schema({
         type: String,
         required: true
     },
+    war: {
+        type: Schema.Types.ObjectId,
+        ref: 'War',
+        required: true
+    },
     index: Number,
     territory: {
         type: Schema.Types.ObjectId,
@@ -25,7 +30,18 @@ const battleSchema = new Schema({
             required: true
         }]
     },
-    ongoing: Boolean
+    ongoing: Boolean,
+    victory: {
+        victor: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Nation'
+        }],
+        territoryTo: {
+            type: Schema.Types.ObjectId,
+            ref: 'Nation',
+            required: true
+        }
+    }
 }, { timestamps: true });
 
 const warSchema = new Schema({

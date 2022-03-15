@@ -70,6 +70,7 @@ const updateWar = async (id, field, value) => {
     return doc;
 };
 
+
 const getBattles = async (id, query = {}) => {
     const doc = await War.findById(id).
         populate({
@@ -81,19 +82,37 @@ const getBattles = async (id, query = {}) => {
     return doc.battles;
 };
 
-const addBattle = async ({ name = '', territory = '', belligerents = {aggressors: [], defenders: []} }, warId = '') => {
-    const territoryDoc = await Territory.findById(territory);
+const getBattle = async (id, index) => {
+    const warDoc = await War.findById(id).lean().exec();
+    const doc = await Battle.findById(warDoc.battles[index]).
+        populate('belligerents.aggressors').
+        populate('belligerents.defenders').
+        exec();
+
+    return doc;
+}
+
+const addBattle = async ({ name = '', territory = '', belligerents = {aggressors: [], defenders: []}, territoryTo }, warId = '') => {
+    const territoryDoc = await Territory.findById(territory).exec();
+    const warDoc = await War.findById(warId).exec();
+    // Error catchers
+    if (!territoryDoc) { throw new Error('Territory not found'); };
     if (territoryDoc.currentBattle) { throw new Error(`Territory ${territoryDoc.name} is already in a battle`); };
+    if (!warDoc) { throw new Error('War not found'); };
 
     const battleDoc = new Battle({
         name,
+        war: warId,
         territory,
         belligerents,
-        ongoing: true
+        ongoing: true,
+        victory: {
+            victor: [],
+            territoryTo
+        }
     });
     const savedDoc = await battleDoc.save();
 
-    const warDoc = await War.findById(warId).exec();
     warDoc.battles.push(savedDoc._id);
     await warDoc.save();
 
@@ -123,10 +142,20 @@ const updateBattle = async (id, index, field, value) => {
         await territoryDoc.save();
     };
 
+    if (field === 'victory' && value === 'aggressors') {
+        const territoryDoc = await Territory.findById(doc.territory).exec();
+        territoryDoc.occupant = doc.victory.territoryTo;
+        await territoryDoc.save();
+    };
+
     // Setters
     switch (fields[0]) {
         case 'belligerents':
             doc[fields[0]][fields[1]].push(value);
+            break;
+
+        case 'victory':
+            doc.victory.victor.push(...doc.belligerents[value]);
             break;
     
         default:
@@ -139,4 +168,4 @@ const updateBattle = async (id, index, field, value) => {
 };
 
 
-export default { getWars, getWar, queryWar, newWar, updateWar, getBattles, addBattle, updateBattle };
+export default { getWars, getWar, queryWar, newWar, updateWar, getBattles, getBattle, addBattle, updateBattle };

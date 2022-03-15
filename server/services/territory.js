@@ -1,13 +1,13 @@
 import Territory from "../models/Territory.js";
 
 const getMap = async () => {
-    return await Territory.find().select('name').exec();
+    return await Territory.find().select(['name', 'occupant']).exec();
 };
 
 const findTerritory = async (name, useRegex) => {
     const regex = name;
     if (useRegex) { regex = RegExp(name, 'i') }
-    return await Territory.find({ name: regex }).exec();
+    return await Territory.find({ 'name': regex }).exec();
 };
 
 const getTerritoryById = async (id) => {

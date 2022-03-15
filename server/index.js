@@ -10,7 +10,7 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
     console.log(`A ${req.method} request was sent to ${req.url}`);
     next();
 });

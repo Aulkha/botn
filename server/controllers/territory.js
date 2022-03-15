@@ -111,7 +111,8 @@ controller.findTerritory = async (req, res) => {
 controller.postTerritory = async (req, res) => {
     const body = req.body;
     try {
-        if (await service.findTerritory(body.name)) { res.status(405).send(`Territory ${body.name} already exists. Use PUT or PATCH instead to update.`); return; }
+        const existingTerritory = await service.findTerritory(body.name);
+        if (existingTerritory.length > 0) { res.status(405).send(`Territory ${body.name} already exists. Use PUT or PATCH instead to update.`); return; };
         const doc = await service.newTerritory(body);
         res.status(201);
         res.send({ doc });
